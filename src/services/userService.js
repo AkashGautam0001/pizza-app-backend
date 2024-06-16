@@ -1,39 +1,37 @@
-class UserService {
-	constructor(_userRespository) {
-		this.userRespository = _userRespository;
+const { findUser, createUser } = require("../repositories/userRepository");
+
+async function registerUser(userDetails) {
+	console.log("Hitting User Service");
+	const user = await findUser({
+		email: userDetails.email,
+		mobileNumber: userDetails.mobileNumber,
+	});
+
+	if (user) {
+		throw {
+			reason: "User with the given email and mobile already exit",
+			statusCode: 400,
+		};
 	}
 
-	async registerUser(userDetails) {
-		console.log("Hitting User Service");
-		const user = await this.userRespository.findUser({
-			email: userDetails.email,
-			mobileNumber: userDetails.mobileNumber,
-		});
+	const newUser = await createUser({
+		email: userDetails.email,
+		password: userDetails.password,
+		mobileNumber: userDetails.mobileNumber,
+		lastName: userDetails.lastName,
+		firstName: userDetails.firstName,
+	});
 
-		if (user) {
-			throw {
-				reason: "User with the given email and mobile already exit",
-				statusCode: 400,
-			};
-		}
-
-		const newUser = await this.userRespository.createUser({
-			email: userDetails.email,
-			password: userDetails.password,
-			mobileNumber: userDetails.mobileNumber,
-			lastName: userDetails.lastName,
-			firstName: userDetails.firstName,
-		});
-
-		if (!newUser) {
-			throw {
-				reason: "Error : createUser in userService",
-				statusCode: 500,
-			};
-		}
-
-		return newUser;
+	if (!newUser) {
+		throw {
+			reason: "Error : createUser in userService",
+			statusCode: 500,
+		};
 	}
+
+	return newUser;
 }
 
-module.exports = UserService;
+module.exports = {
+	registerUser,
+};

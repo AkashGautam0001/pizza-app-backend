@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema(
 		mobileNumber: {
 			type: String,
 			trim: true,
-			minlength: [10, ""],
-			maxlength: [10, ""],
+			minlength: [10, "Mobile length should be length 10"],
+			maxlength: [10, "Mobile length should be length 10"],
 			unique: [true, "Phone number is already in user"],
 			required: [true, "Phone number should be provided"],
 		},
@@ -37,12 +37,16 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			required: [true, "Email should be provided"],
 			unique: [true, "Email is already in use"],
-			match: [, "Please fill a valid email"],
+			match: [
+				/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+				"Please fill a valid email",
+			],
 		},
 		password: {
 			type: String,
 			required: [true, "Password should be provided"],
 			minlength: [6, "Password number should be provided"],
+			required: true,
 		},
 	},
 	{ timestamps: true }

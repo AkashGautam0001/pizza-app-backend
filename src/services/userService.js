@@ -1,3 +1,4 @@
+const { createCart } = require("../repositories/cartRepository");
 const { findUser, createUser } = require("../repositories/userRepository");
 
 async function registerUser(userDetails) {
@@ -28,6 +29,8 @@ async function registerUser(userDetails) {
 			statusCode: 500,
 		};
 	}
+
+	await createCart(newUser._id);
 
 	return newUser;
 }

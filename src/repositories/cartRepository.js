@@ -23,7 +23,12 @@ async function getCartByUserId(userId) {
 	try {
 		const cart = await Cart.findOne({
 			user: userId,
-		});
+		})
+			.populate({
+				path: "items.product",
+				model: "product",
+			})
+			.exec();
 		return cart;
 	} catch (error) {
 		console.log(error);

@@ -4,14 +4,12 @@ const fs = require("fs");
 
 const ServerConfig = require("./config/serverConfig");
 const connectDB = require("./config/dbConfig");
-const { isLoggedIn } = require("./validation/authValidator");
-const uploader = require("./middlewares/multerMiddleware");
-const cloudinary = require("./config/cloudinaryConfig");
 
 const userRouter = require("./routes/userRoute");
 const cartRouter = require("./routes/cartRoute");
 const authRouter = require("./routes/authRoute");
 const productRouter = require("./routes/productRoute");
+const orderRouter = require("./routes/orderRoute");
 
 const app = express();
 
@@ -24,25 +22,7 @@ app.use("/users", userRouter);
 app.use("/carts", cartRouter);
 app.use("/auth", authRouter);
 app.use("/product", productRouter);
-
-app.get("/ping", isLoggedIn, (req, res) => {
-	console.log(req.cookies);
-	return res.json({
-		message: "Ping Pong",
-	});
-});
-
-app.post("/photo", uploader.single("incoming"), async (req, res) => {
-	console.log(req.file);
-	const result = await cloudinary.uploader.upload(req.file.path);
-	console.log(result.secure_url);
-	fs.unlink(req.file.path, (err) => {
-		if (err) throw err;
-		console.log("file was deleted");
-	});
-	console.log(req.body);
-	return res.json({ message: "OK", imageUrl: result.secure_url });
-});
+app.use("/orders", orderRouter);
 
 app.listen(ServerConfig.PORT, async () => {
 	await connectDB();

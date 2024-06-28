@@ -37,7 +37,15 @@ async function loginUser(authDetails) {
 		}
 	);
 
-	return token;
+	return {
+		token,
+		userRole,
+		userData: {
+			email: user.email,
+			firstName: user.firstName,
+			lastName: user.lastName,
+		},
+	};
 }
 
 module.exports = {

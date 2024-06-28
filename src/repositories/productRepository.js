@@ -29,6 +29,16 @@ async function getProductById(productId) {
 	}
 }
 
+async function getAllProducts() {
+	try {
+		const products = Product.find({});
+		return products;
+	} catch (error) {
+		console.log(error);
+		throw new InternalServerError();
+	}
+}
+
 async function deleteProductById(productId) {
 	try {
 		const response = Product.findByIdAndDelete({ _id: productId });
@@ -42,4 +52,5 @@ module.exports = {
 	createProduct,
 	getProductById,
 	deleteProductById,
+	getAllProducts,
 };

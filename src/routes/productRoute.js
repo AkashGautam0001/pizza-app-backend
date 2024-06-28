@@ -3,6 +3,7 @@ const {
 	addProduct,
 	getProduct,
 	deleteProduct,
+	getProducts,
 } = require("../controllers/productController");
 const uploader = require("../middlewares/multerMiddleware");
 const { isLoggedIn, isAdmin } = require("../validation/authValidator");
@@ -16,7 +17,8 @@ productRouter.post(
 	uploader.single("productImage"),
 	addProduct
 );
+productRouter.get("/", getProducts);
 productRouter.get("/:id", getProduct);
-productRouter.delete("/:id", deleteProduct);
+productRouter.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
 
 module.exports = productRouter;

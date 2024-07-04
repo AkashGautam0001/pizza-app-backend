@@ -4,7 +4,7 @@
 	"description": "This is the Pizza delivery app",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js"
+		"start": "npx nodemon src/index.js"
 	},
 	"repository": {
 		"type": "git",

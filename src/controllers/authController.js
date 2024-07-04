@@ -7,7 +7,7 @@ async function login(req, res) {
 		const response = await loginUser(loginPayload);
 		res.cookie("authToken", response.token, {
 			httpOnly: true,
-			secure: false,
+			secure: true,
 			maxAge: 7 * 24 * 60 * 60 * 1000,
 		});
 		return res.status(200).json({
@@ -33,7 +33,7 @@ async function logout(req, res) {
 	try {
 		res.cookie("authToken", "", {
 			httpOnly: true,
-			secure: false,
+			secure: true,
 		});
 
 		return res.status(200).json({

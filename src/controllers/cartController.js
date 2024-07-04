@@ -41,6 +41,8 @@ async function modifyProductToCart(req, res) {
 			req.params.productId,
 			req.params.operation === "add"
 		);
+		console.log(req.user);
+		console.log("modifyProduct", cart);
 		return res.status(200).json({
 			success: true,
 			message: "Successfully product added to the cart",

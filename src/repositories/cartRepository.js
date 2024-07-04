@@ -1,7 +1,6 @@
 const Cart = require("../schema/cartSchema");
 const BadRequestError = require("../utils/badRequestError");
 const InternalServerError = require("../utils/internalServerError");
-const NotFoundError = require("../utils/notFoundError");
 
 async function createCart(userId) {
 	try {
@@ -33,7 +32,6 @@ async function getCartByUserId(userId) {
 		return cart;
 	} catch (error) {
 		console.log(error);
-		s;
 		throw new InternalServerError();
 	}
 }

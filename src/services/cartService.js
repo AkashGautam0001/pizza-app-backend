@@ -9,7 +9,7 @@ const { getProductById } = require("./productService");
 
 async function getCart(userId) {
 	const cart = await getCartByUserId(userId);
-
+	console.log("cart", cart, "userid", userId);
 	if (!cart) {
 		throw new NotFoundError("Cart");
 	}

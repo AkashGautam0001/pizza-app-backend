@@ -11,11 +11,12 @@ const cartRouter = require("./routes/cartRoute");
 const authRouter = require("./routes/authRoute");
 const productRouter = require("./routes/productRoute");
 const orderRouter = require("./routes/orderRoute");
+const serverConfig = require("./config/serverConfig");
 
 const app = express();
 
 const options = {
-	origin: "https://pizzahub-pi.vercel.app", // Replace with your frontend URL
+	origin: serverConfig.FRONTEND_URL, // Replace with your frontend URL
 	credentials: true, // Include if sending cookies
 	methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
 	allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers

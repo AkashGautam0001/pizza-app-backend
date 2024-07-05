@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, COOKIE_SECURE } = require("../config/serverConfig");
+const { JWT_SECRET } = require("../config/serverConfig");
 const UnAuthorisedError = require("../utils/unauthorisedError");
 const serverConfig = require("../config/serverConfig");
 
 async function isLoggedIn(req, res, next) {
 	const token = req.cookies["authToken"];
-	console.log(token);
+	console.log("token", token);
 	if (!token) {
 		return res.status(401).json({
 			success: false,

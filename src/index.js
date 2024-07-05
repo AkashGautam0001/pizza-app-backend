@@ -14,12 +14,15 @@ const orderRouter = require("./routes/orderRoute");
 
 const app = express();
 
-app.use(
-	cors({
-		origin: "https://pizzahub-pi.vercel.app/",
-		credentials: true,
-	})
-);
+const options = {
+	origin: "https://pizzahub-pi.vercel.app", // Replace with your frontend URL
+	credentials: true, // Include if sending cookies
+	methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+	allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+};
+
+app.use(cors(options));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.text());

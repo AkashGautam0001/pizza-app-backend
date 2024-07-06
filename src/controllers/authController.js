@@ -3,10 +3,11 @@ const { COOKIE_SECURE } = require("../config/serverConfig");
 const { loginUser } = require("../services/authService");
 
 async function login(req, res) {
-	console.log("cookie from fronted", req.cookies);
+	console.log("cookie from fronted", res.cookies);
 	try {
 		const loginPayload = req.body;
 		const response = await loginUser(loginPayload);
+		console.log("authToken at authController", response.token);
 		res.cookie("authToken", response.token, {
 			// httpOnly: true,
 			// secure: COOKIE_SECURE,
@@ -15,9 +16,12 @@ async function login(req, res) {
 			expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Adjust expiry as needed
 			secure: serverConfig.COOKIE_SECURE, // Set to true if using HTTPS
 			httpOnly: true,
-			sameSite: "none",
-			domain: serverConfig.FRONTEND_URL,
+			sameSite: "None",
+			// domain: serverConfig.FRONTEND_URL,
 		});
+
+		console.log("response.userRole : ", response.userRole);
+		console.log("response.userData : ", response.userData);
 		return res.status(200).json({
 			success: true,
 			message: "Logged in Successfully",
@@ -42,8 +46,8 @@ async function logout(req, res) {
 		res.cookie("authToken", "", {
 			httpOnly: true,
 			secure: serverConfig.COOKIE_SECURE,
-			sameSite: "none",
-			domain: serverConfig.FRONTEND_URL,
+			sameSite: "None",
+			// domain: serverConfig.FRONTEND_URL,
 		});
 
 		return res.status(200).json({

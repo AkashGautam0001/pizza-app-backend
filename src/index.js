@@ -19,7 +19,7 @@ const options = {
 	origin: serverConfig.FRONTEND_URL, // Replace with your frontend URL
 	credentials: true, // Include if sending cookies
 	methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
-	allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+	allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"], // Allowed headers
 };
 
 app.use(cors(options));

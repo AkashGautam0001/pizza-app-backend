@@ -36,6 +36,7 @@ async function loginUser(authDetails) {
 			expiresIn: JWT_EXPIRY,
 		}
 	);
+	console.log("token at authservice", token);
 
 	return {
 		token,

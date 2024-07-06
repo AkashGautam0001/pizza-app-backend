@@ -9,6 +9,7 @@ const { isLoggedIn } = require("../validation/authValidator");
 const cartRouter = express.Router();
 
 cartRouter.get("/", isLoggedIn, getCartByUser);
+// cartRouter.get("/", getCartByUser);
 cartRouter.post("/:operation/:productId", isLoggedIn, modifyProductToCart);
 cartRouter.delete("/products", isLoggedIn, clearProductById);
 

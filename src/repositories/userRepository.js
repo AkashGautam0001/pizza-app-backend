@@ -20,6 +20,25 @@ async function findUser(parameters) {
 	}
 }
 
+async function findUserById(userId) {
+	try {
+		const response = await User.findOne({ _id: userId });
+		console.log("response", response);
+		return response;
+	} catch (error) {
+		if (error.name === "ValidationError") {
+			const errorMessageList = Object.keys(error.errors).map(
+				(property) => {
+					return error.errors[property].message;
+				}
+			);
+			throw new BadRequestError(errorMessageList);
+		}
+		console.log(error);
+		throw new InternalServerError();
+	}
+}
+
 async function createUser(userDetails) {
 	console.log("Hitting User Repository");
 	try {
@@ -42,4 +61,5 @@ async function createUser(userDetails) {
 module.exports = {
 	findUser,
 	createUser,
+	findUserById,
 };
